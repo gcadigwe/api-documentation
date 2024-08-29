@@ -1,13 +1,39 @@
 const express = require("express");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json");
+const fs = require("fs");
+const path = require("path");
+// const swaggerUi = require("swagger-ui-express");
+// const swaggerDocument = require("./swagger.json");
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get("/docs", (req, res) => {
+  res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>API Documentation</title>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700">
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+            }
+          </style>
+        </head>
+        <body>
+          <redoc spec-url="/swagger.json"></redoc>
+          <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
+        </body>
+      </html>
+    `);
+});
+
+app.get("/swagger.json", (req, res) => {
+  res.sendFile(path.join(__dirname, "swagger.json"));
+});
 
 app.post("/echo", (req, res) => {
   console.log(req.body);
