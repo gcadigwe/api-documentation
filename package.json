@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2",
-    "swagger-ui-express": "^5.0.1"
+    "apidoc": "^1.2.0",
+    "express": "^4.19.2"
   }
 }

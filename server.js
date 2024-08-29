@@ -1,45 +1,45 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerDocument = require("./swagger.json");
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-app.get("/docs", (req, res) => {
-  res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>API Documentation</title>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700">
-          <style>
-            body {
-              margin: 0;
-              padding: 0;
-            }
-          </style>
-        </head>
-        <body>
-          <redoc spec-url="/swagger.json"></redoc>
-          <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
-        </body>
-      </html>
-    `);
-});
-
-app.get("/swagger.json", (req, res) => {
-  res.sendFile(path.join(__dirname, "swagger.json"));
-});
-
+/**
+ * @api {post} /echo Echo data
+ * @apiName EchoData
+ * @apiGroup Echo
+ * @apiDescription This endpoint echoes back the received data.
+ *
+ * @apiParam {Object} body The data to be echoed.
+ *
+ * @apiSuccess {Object} body The echoed data.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "echo": { "key": "value" }
+ *     }
+ *
+ * @apiError (Error 400) BadRequest The request body is invalid.
+ */
 app.post("/echo", (req, res) => {
   console.log(req.body);
   res.send({ echo: req.body });
 });
 
+/**
+ * @api {get} /hello Get greeting
+ * @apiName GetGreeting
+ * @apiGroup Greeting
+ * @apiDescription This endpoint returns a greeting message.
+ *
+ * @apiSuccess {String} message The greeting message.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     "Hello"
+ */
 app.get("/hello", (req, res) => {
   res.send("Hello");
 });
