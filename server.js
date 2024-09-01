@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const app = express();
 const port = 3000;
@@ -43,6 +44,8 @@ app.post("/echo", (req, res) => {
 app.get("/hello", (req, res) => {
   res.send("Hello");
 });
+
+app.use("/api-docs", express.static(path.join(__dirname, "doc")));
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
